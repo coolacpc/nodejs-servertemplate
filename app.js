@@ -1,13 +1,21 @@
 // Creating Server variables
 const http = require('http')
-const port = 3000
+const fs = require('fs')
+const port = 3001
 
 
 // Creating Server
 const server = http.createServer(function(req, res){
     res.writeHead(200, { 'Content-Type': 'text/html' })
-    res.write('hello node')
-    res.end()
+    fs.readFile('index.html', function(error, data) { //Rendering HTML file
+        if (error) {  // Error Handler 
+            res.writeHead(404)
+            res.write('Error: No such file or directory, Try again')
+        } else {
+            res.write(data) // Renders HTML file is no errors found (your localhost link)
+        }
+        res.end()
+    })
 })
 
 
